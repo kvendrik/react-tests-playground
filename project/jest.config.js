@@ -1,9 +1,6 @@
 module.exports = {
   moduleDirectories: ['node_modules'],
   setupFilesAfterEnv: ['<rootDir>/testsSetup.ts'],
-  moduleNameMapper: {
-    '\\.(scss|css)$': 'identity-obj-proxy',
-  },
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
