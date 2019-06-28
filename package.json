@@ -4,7 +4,7 @@
   "description": "Distraction-free React tests playground.",
   "main": "server.js",
   "scripts": {
-    "setup": "yarn && cd project && yarn",
+    "setup": "yarn && cd playground && yarn",
     "start": "node server.js"
   },
   "author": "Koen Vendrik <k.vendrik@gmail.com>",

@@ -5,11 +5,11 @@ const mount = require("koa-mount");
 const serve = require("koa-static");
 const bodyParser = require("koa-bodyparser");
 
-const projectPath = `${__dirname}/project`;
+const playgroundPath = `${__dirname}/playground`;
 const staticPath = `${__dirname}/static`;
-const componentTemplatesPath = `${projectPath}/component-templates`;
+const componentTemplatesPath = `${playgroundPath}/component-templates`;
 
-const tempFilesDirectory = `${projectPath}/~build`;
+const tempFilesDirectory = `${playgroundPath}/~build`;
 const testsTemplate = fs.readFileSync(
   `${componentTemplatesPath}/Component.test.tsx`,
   "utf-8"
@@ -67,6 +67,6 @@ function getTestResultsForRequest(name, code, tests) {
   fs.writeFileSync(`${tempFilesDirectory}/Component.tsx`, parsedComponentFile);
   fs.writeFileSync(`${tempFilesDirectory}/Component.test.tsx`, parsedTestsFile);
 
-  process.chdir(projectPath);
+  process.chdir(playgroundPath);
   return spawnSync("yarn", ["run", "jest", tempFilesDirectory]);
 }

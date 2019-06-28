@@ -1,7 +1,6 @@
 {
-  "name": "project",
+  "name": "playground",
   "version": "1.0.0",
-  "description": "",
   "author": "Koen Vendrik <k.vendrik@gmail.com>",
   "license": "MIT",
   "devDependencies": {
