@@ -1,8 +1,15 @@
 const editors = setupEditors();
+let canSubmit = true;
+
 console.log(editors);
 
 window.addEventListener("keyup", ({ keyCode, metaKey }) => {
   if (keyCode !== 17 || !metaKey) {
+    return;
+  }
+  if (!canSubmit) {
+    const resultNode = document.getElementById('main-result');
+    resultNode.innerHTML = `${resultNode.innerHTML}<br><span class="subdued">Can't submit while running tests.</span>`;
     return;
   }
   // if cmd + ctrl
@@ -56,6 +63,8 @@ function getQueryParameter(name) {
 }
 
 function getResults(id, editors) {
+  canSubmit = false;
+
   const code = editors[`${id}-code`];
   const nameMatch = code.getValue().match(/function (\w+)/);
 
@@ -99,9 +108,11 @@ function getResults(id, editors) {
 
       const [, amountPassed] = output.match(/Tests:.+(\d+ passed)/);
       resultNode.innerHTML = `<span>✅</span> ${amountPassed}`;
+      canSubmit = true;
     })
     .catch(error => {
       resultNode.innerHTML = `<span>❌</span> Code contains error`;
       console.error(error);
+      canSubmit = true;
     });
 }

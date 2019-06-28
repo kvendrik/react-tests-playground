@@ -2,8 +2,10 @@ html,
 body {
   margin: 0;
 }
+html {
+  font-size: 2vw;
+}
 body {
-  font-size: 32px;
   background: #111;
   color: white;
   height: 100vh;
@@ -11,19 +13,21 @@ body {
   align-items: center;
 }
 
-.slide {
+.container {
   width: 95%;
   margin: 0 auto;
   text-align: center;
 }
 
-.slide__editor {
+.editors-wrapper {
   display: flex;
 }
 
 .result {
-  font-size: 48px;
-  height: 50px;
+  font-size: 1.5em;
+  height: 1em;
+  margin: 0;
+  margin-top: 1rem;
 }
 
 .result span {
@@ -31,7 +35,7 @@ body {
   top: 5px;
 }
 
-.result__shortcut {
+.subdued {
   opacity: 0.15;
 }
 
@@ -42,11 +46,12 @@ body {
   text-align: left;
   font-size: 1em;
   float: left;
-  margin: 5px;
-  border-radius: 4px;
-  padding: 15px 25px;
+  margin: 0.5rem;
+  border-radius: 0.2rem;
 }
 
 .CodeMirror .CodeMirror-scroll {
   overflow: auto !important;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0 !important;
 }

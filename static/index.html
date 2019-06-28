@@ -14,10 +14,10 @@
     <script src="https://codemirror.net/mode/jsx/jsx.js"></script>
   </head>
   <body>
-    <div class="slide">
-      <div class="slide__editor">
+    <div class="container">
+      <div class="editors-wrapper">
         <textarea data-code-editor="main-code">
-function Button({children}: any) {
+function Button({children}: {children: React.ReactNode}) {
   return &lt;a>{children}&lt;/a>;
 }</textarea
         >
@@ -28,9 +28,7 @@ it('renders children', () => {
 });</textarea
         >
       </div>
-      <pre class="result" id="main-result">
-        <span class="result__shortcut">Press cmd + ctrl to run tests.</span>
-      </pre>
+      <pre class="result" id="main-result"><span class="subdued">Press cmd + ctrl to run tests.</span></pre>
     </div>
     <script src="/app.js"></script>
   </body>
