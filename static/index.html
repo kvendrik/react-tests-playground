@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Presentation</title>
+    <link href="/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css" />
+    <link rel="stylesheet" href="https://codemirror.net/theme/monokai.css" />
+    <script src="https://codemirror.net/lib/codemirror.js"></script>
+    <script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+    <script src="https://codemirror.net/mode/xml/xml.js"></script>
+    <script src="https://codemirror.net/mode/jsx/jsx.js"></script>
+  </head>
+  <body>
+    <div class="slide">
+      <div class="slide__editor">
+        <textarea data-code-editor="main-code">
+function Button({children}: any) {
+  return &lt;a>{children}&lt;/a>;
+}</textarea
+        >
+        <textarea data-code-editor="main-tests">
+it('renders children', () => {
+  const wrapper = mount(&lt;Button>Click me!&lt;/Button>);
+  expect(wrapper.text()).toBe('Click me!');
+});</textarea
+        >
+      </div>
+      <pre class="result" id="main-result">
+        <span class="result__shortcut">Press cmd + ctrl to run tests.</span>
+      </pre>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>

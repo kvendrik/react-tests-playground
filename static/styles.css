@@ -1,0 +1,52 @@
+html,
+body {
+  margin: 0;
+}
+body {
+  font-size: 32px;
+  background: #111;
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.slide {
+  width: 95%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.slide__editor {
+  display: flex;
+}
+
+.result {
+  font-size: 48px;
+  height: 50px;
+}
+
+.result span {
+  position: relative;
+  top: 5px;
+}
+
+.result__shortcut {
+  opacity: 0.15;
+}
+
+.CodeMirror {
+  width: 50%;
+  height: auto !important;
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 1em;
+  float: left;
+  margin: 5px;
+  border-radius: 4px;
+  padding: 15px 25px;
+}
+
+.CodeMirror .CodeMirror-scroll {
+  overflow: auto !important;
+}

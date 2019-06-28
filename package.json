@@ -1,0 +1,18 @@
+{
+  "name": "react-tests-playground",
+  "version": "1.0.0",
+  "description": "Distraction-free React tests playground.",
+  "main": "server.js",
+  "scripts": {
+    "setup": "yarn && cd project && yarn",
+    "start": "node server.js"
+  },
+  "author": "Koen Vendrik <k.vendrik@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0"
+  }
+}
