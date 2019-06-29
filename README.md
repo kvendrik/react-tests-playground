@@ -1,4 +1,4 @@
-# react-tests-playground
+# React Tests Playground
 
 Distraction-free React tests playground that can be embedded in presentation slides for live React tests demos.
 
