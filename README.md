@@ -2,7 +2,7 @@
 
 Distraction-free React tests playground that can be embedded in presentation slides for live React tests demos.
 
-**⚠️ Warning: This project is an experiment and is extremely scrappy, hacky, and insecure and should only be used locally.**
+**⚠️ Warning: This project is an experiment, is extremely scrappy and insecure, and should only be used locally.**
 
 ## Setup
 1. Install the dependencies using `yarn setup`.
