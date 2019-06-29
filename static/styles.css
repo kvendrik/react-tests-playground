@@ -3,7 +3,7 @@ body {
   margin: 0;
 }
 html {
-  font-size: 2vw;
+  font-size: 1.4vw;
 }
 body {
   background: #111;
@@ -21,6 +21,45 @@ body {
 
 .editors-wrapper {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.editors-wrapper--vertical {
+  flex-direction: column;
+}
+
+.editors-wrapper--vertical .CodeMirror {
+  margin: 0.5em 0;
+}
+
+.bottom-menu {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.5em;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  opacity: 0.15;
+  padding: 1em;
+  border-radius: 0.5em;
+  transition: opacity 0.1s ease;
+  cursor: pointer;
+}
+
+.button:hover,
+.button--is-active {
+  opacity: 0.3;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.layout-icon {
+  width: 2em;
 }
 
 .result {
@@ -40,13 +79,13 @@ body {
 }
 
 .CodeMirror {
-  width: 50%;
+  flex-basis: 49.5%;
+  flex-shrink: 0;
   height: auto !important;
   box-sizing: border-box;
   text-align: left;
   font-size: 1em;
   float: left;
-  margin: 0.5rem;
   border-radius: 0.2rem;
 }
 

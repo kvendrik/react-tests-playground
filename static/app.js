@@ -2,6 +2,7 @@ const editors = setupEditors();
 let canSubmit = true;
 
 console.log(editors);
+setupLayoutButtons();
 
 window.addEventListener("keyup", ({ keyCode, metaKey }) => {
   if (keyCode !== 17 || !metaKey) {
@@ -15,6 +16,19 @@ window.addEventListener("keyup", ({ keyCode, metaKey }) => {
   // if cmd + ctrl
   getResults("main", editors);
 });
+
+function setupLayoutButtons() {
+  const layoutButtons = document.querySelectorAll('[data-vertical-layout-change]');
+  for (const layoutButton of layoutButtons) {
+    layoutButton.addEventListener('click', ({target}) => {
+      const buttonNode = target.parentNode;
+      const editorsWrapperId = buttonNode.getAttribute('data-vertical-layout-change');
+      const wrapperNode = document.getElementById(editorsWrapperId);
+      wrapperNode.classList.toggle('editors-wrapper--vertical');
+      buttonNode.classList.toggle('button--is-active');
+    });
+  }
+}
 
 function setupEditors() {
   const editors = {};

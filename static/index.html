@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Presentation</title>
+    <title>Playground</title>
     <link href="/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css" />
     <link rel="stylesheet" href="https://codemirror.net/theme/monokai.css" />
@@ -15,7 +15,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="editors-wrapper">
+      <div class="editors-wrapper" id="main">
         <textarea data-code-editor="main-code">
 function Button({children}: {children: React.ReactNode}) {
   return &lt;a>{children}&lt;/a>;
@@ -29,6 +29,9 @@ it('renders children', () => {
         >
       </div>
       <pre class="result" id="main-result"><span class="subdued">Press cmd + ctrl to run tests.</span></pre>
+    </div>
+    <div class="bottom-menu">
+      <button class="button" data-vertical-layout-change="main"><img class="layout-icon" src="/vertical-editor-layout.svg" /></button>
     </div>
     <script src="/app.js"></script>
   </body>
