@@ -4,7 +4,7 @@ let canSubmit = true;
 console.log(editors);
 setupLayoutButtons();
 
-window.addEventListener("keyup", ({ keyCode, metaKey }) => {
+document.addEventListener("keyup", ({ keyCode, metaKey }) => {
   if (keyCode !== 17 || !metaKey) {
     return;
   }
@@ -18,16 +18,16 @@ window.addEventListener("keyup", ({ keyCode, metaKey }) => {
 });
 
 function setupLayoutButtons() {
-  const layoutButtons = document.querySelectorAll('[data-vertical-layout-change]');
-  for (const layoutButton of layoutButtons) {
-    layoutButton.addEventListener('click', ({target}) => {
-      const buttonNode = target.parentNode;
-      const editorsWrapperId = buttonNode.getAttribute('data-vertical-layout-change');
-      const wrapperNode = document.getElementById(editorsWrapperId);
-      wrapperNode.classList.toggle('editors-wrapper--vertical');
-      buttonNode.classList.toggle('button--is-active');
-    });
-  }
+  document.addEventListener('click', ({target}) => {
+    if (!target.classList.contains('layout-icon')) {
+      return;
+    }
+    const buttonNode = target.parentNode;
+    const editorsWrapperId = buttonNode.getAttribute('data-vertical-layout-change');
+    const wrapperNode = document.getElementById(editorsWrapperId);
+    wrapperNode.classList.toggle('editors-wrapper--vertical');
+    buttonNode.classList.toggle('button--is-active');
+  });
 }
 
 function setupEditors() {
@@ -114,6 +114,8 @@ function getResults(id, editors) {
     })
     .then(res => res.json())
     .then(({ output, status }) => {
+      canSubmit = true;
+
       if (status > 0) {
         const [, amountFailed] = output.match(/Tests:.+(\d+ failed)/);
         resultNode.innerHTML = `<span>❌</span> ${amountFailed}`;
@@ -122,7 +124,6 @@ function getResults(id, editors) {
 
       const [, amountPassed] = output.match(/Tests:.+(\d+ passed)/);
       resultNode.innerHTML = `<span>✅</span> ${amountPassed}`;
-      canSubmit = true;
     })
     .catch(error => {
       resultNode.innerHTML = `<span>❌</span> Code contains error`;

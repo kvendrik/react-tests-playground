@@ -4,6 +4,8 @@ Distraction-free React tests playground that can be embedded in presentation sli
 
 **⚠️ Warning: This project is an experiment, is extremely scrappy and insecure, and should only be used locally.**
 
+![](demo.gif)
+
 ## Setup
 1. Install the dependencies using `yarn setup`.
 2. Run the app using `yarn server`.

@@ -1,18 +1,28 @@
+:root {
+  --subdued-opacity: 0.15;
+  --subdued-active-opacity: 0.3;
+  --spacing-base: 0.5rem;
+  --spacing-loose: 1rem;
+  --color-dark: #111;
+  --color-light: #fff;
+}
+
 html,
 body {
   margin: 0;
 }
+
 html {
   font-size: 1.4vw;
 }
+
 body {
-  background: #111;
-  color: white;
+  background: var(--color-dark);
+  color: var(--color-light);
   height: 100vh;
   display: flex;
   align-items: center;
 }
-
 .container {
   width: 95%;
   margin: 0 auto;
@@ -30,20 +40,19 @@ body {
 }
 
 .editors-wrapper--vertical .CodeMirror {
-  margin: 0.5em 0;
+  margin: var(--spacing-base) 0;
 }
 
 .bottom-menu {
   position: absolute;
-  bottom: 0.5em;
-  right: 0.5em;
+  bottom: var(--spacing-loose);
+  right: var(--spacing-loose);
 }
 
 .button {
   background: transparent;
   border: none;
-  opacity: 0.15;
-  padding: 1em;
+  opacity: var(--subdued-opacity);
   border-radius: 0.5em;
   transition: opacity 0.1s ease;
   cursor: pointer;
@@ -51,7 +60,7 @@ body {
 
 .button:hover,
 .button--is-active {
-  opacity: 0.3;
+  opacity: var(--subdued-active-opacity);
 }
 
 .button:focus {
@@ -66,7 +75,7 @@ body {
   font-size: 1.5em;
   height: 1em;
   margin: 0;
-  margin-top: 1rem;
+  margin-top: var(--spacing-loose);
 }
 
 .result span {
@@ -75,7 +84,7 @@ body {
 }
 
 .subdued {
-  opacity: 0.15;
+  opacity: var(--subdued-opacity);
 }
 
 .CodeMirror {
@@ -91,6 +100,6 @@ body {
 
 .CodeMirror .CodeMirror-scroll {
   overflow: auto !important;
-  padding: 0.5rem 0.7rem;
+  padding: var(--spacing-base) 0.7rem;
   margin-bottom: 0 !important;
 }
