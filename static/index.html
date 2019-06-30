@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Playground</title>
-    <link href="/styles.css" rel="stylesheet" />
+    <link href="/document.css" rel="stylesheet" />
+    <link href="/editor.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css" />
     <link rel="stylesheet" href="https://codemirror.net/theme/monokai.css" />
     <script src="https://codemirror.net/lib/codemirror.js"></script>
@@ -17,8 +18,8 @@
     <div class="container">
       <div class="editors-wrapper" id="main">
         <textarea data-code-editor="main-code">
-function Button({children}: {children: React.ReactNode}) {
-  return &lt;a>{children}&lt;/a>;
+function Button({children}: any) {
+  return &lt;a>{children || 'Hello!'}&lt;/a>;
 }</textarea
         >
         <textarea data-code-editor="main-tests">
@@ -28,11 +29,14 @@ it('renders children', () => {
 });</textarea
         >
       </div>
-      <pre class="result" id="main-result"><span class="subdued">Press cmd + ctrl to run tests.</span></pre>
+      <iframe src="/preview.html" id="main-preview" frameborder="0"></iframe>
+      <pre class="result" id="main-result"><span class="subdued">Press cmd + ctrl to run tests.<br>Press cmd + alt to refresh the preview.</span></pre>
     </div>
     <div class="bottom-menu">
-      <button class="button" data-vertical-layout-change="main"><img class="layout-icon" src="/vertical-editor-layout.svg" /></button>
+      <button class="button" data-layout-change="main" data-layout-action="vertical"><img class="layout-icon" src="/vertical-editor-layout.svg" /></button>
+      <button class="button button--is-active" data-layout-change="main" data-layout-action="preview"><img class="layout-icon" src="/preview.svg" /></button>
     </div>
-    <script src="/app.js"></script>
+    <script src="/utilities.js"></script>
+    <script src="/editor.js"></script>
   </body>
 </html>

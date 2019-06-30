@@ -1,0 +1,16 @@
+:root {
+  --subdued-opacity: 0.15;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+html {
+  font-size: 1.4vw;
+}
+
+.subdued {
+  opacity: var(--subdued-opacity);
+}

@@ -1,5 +1,4 @@
-import React, {useState, useCallback} from 'react';
-import AccountConnection from './AccountConnection';
+import React from 'react';
 
 {{code}}
 

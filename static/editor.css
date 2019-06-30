@@ -1,19 +1,11 @@
 :root {
-  --subdued-opacity: 0.15;
   --subdued-active-opacity: 0.3;
   --spacing-base: 0.5rem;
   --spacing-loose: 1rem;
   --color-dark: #111;
+  --color-dark-light: #272822;
   --color-light: #fff;
-}
-
-html,
-body {
-  margin: 0;
-}
-
-html {
-  font-size: 1.4vw;
+  --border-radius: 0.2rem;
 }
 
 body {
@@ -23,10 +15,18 @@ body {
   display: flex;
   align-items: center;
 }
+
 .container {
   width: 95%;
   margin: 0 auto;
   text-align: center;
+}
+
+iframe {
+  width: 100%;
+  background: var(--color-dark-light);
+  border-radius: var(--border-radius);
+  margin-top: var(--spacing-base);
 }
 
 .editors-wrapper {
@@ -47,6 +47,8 @@ body {
   position: absolute;
   bottom: var(--spacing-loose);
   right: var(--spacing-loose);
+  display: flex;
+  align-items: center;
 }
 
 .button {
@@ -71,6 +73,10 @@ body {
   width: 2em;
 }
 
+.preview-hidden {
+  display: none;
+}
+
 .result {
   font-size: 1.5em;
   height: 1em;
@@ -83,19 +89,15 @@ body {
   top: 5px;
 }
 
-.subdued {
-  opacity: var(--subdued-opacity);
-}
-
 .CodeMirror {
-  flex-basis: 49.5%;
+  flex-basis: calc(50% - (var(--spacing-base) / 2));
   flex-shrink: 0;
   height: auto !important;
   box-sizing: border-box;
   text-align: left;
   font-size: 1em;
   float: left;
-  border-radius: 0.2rem;
+  border-radius: var(--border-radius);
 }
 
 .CodeMirror .CodeMirror-scroll {

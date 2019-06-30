@@ -5,16 +5,22 @@ console.log(editors);
 setupLayoutButtons();
 
 document.addEventListener("keyup", ({ keyCode, metaKey }) => {
-  if (keyCode !== 17 || !metaKey) {
+  console.log(keyCode, metaKey);
+  if (keyCode === 17 && metaKey) {
+    // if cmd + ctrl
+    if (!canSubmit) {
+      const resultNode = document.getElementById('main-result');
+      resultNode.innerHTML = `${resultNode.innerHTML}<br><span class="subdued">Can't submit while running tests.</span>`;
+      return;
+    }
+    getResults("main", editors);
     return;
   }
-  if (!canSubmit) {
-    const resultNode = document.getElementById('main-result');
-    resultNode.innerHTML = `${resultNode.innerHTML}<br><span class="subdued">Can't submit while running tests.</span>`;
-    return;
+
+  if (keyCode === 18 && metaKey) {
+    // if cmd + alt
+    refreshPreview('main', editors);
   }
-  // if cmd + ctrl
-  getResults("main", editors);
 });
 
 function setupLayoutButtons() {
@@ -23,10 +29,21 @@ function setupLayoutButtons() {
       return;
     }
     const buttonNode = target.parentNode;
-    const editorsWrapperId = buttonNode.getAttribute('data-vertical-layout-change');
-    const wrapperNode = document.getElementById(editorsWrapperId);
-    wrapperNode.classList.toggle('editors-wrapper--vertical');
+    const editorId = buttonNode.getAttribute('data-layout-change');
+    const action = buttonNode.getAttribute('data-layout-action');
+
     buttonNode.classList.toggle('button--is-active');
+
+    if (action === 'vertical') {
+      const wrapperNode = document.getElementById(editorId);
+      wrapperNode.classList.toggle('editors-wrapper--vertical');
+      return;
+    }
+
+    if (action === 'preview') {
+      const previewNode = document.getElementById(`${editorId}-preview`);
+      previewNode.classList.toggle('preview-hidden');
+    }
   });
 }
 
@@ -63,23 +80,28 @@ function checkEditorValueGiven(editorName, editor, editorElement) {
   editor.getDoc().setValue(tests);
 }
 
-function getQueryParameter(name) {
-  const queryMatch = location.search.match(new RegExp(`${name}=([^\\&]+)`));
-  if (!queryMatch) {
-    return "";
-  }
-  const [, encodedValue] = queryMatch;
-  console.log(encodedValue);
-  if (!encodedValue) {
-    return "";
-  }
-  return decodeURI(atob(encodedValue));
+function refreshPreview(editorId, editors) {
+  const previewNode = document.getElementById(`${editorId}-preview`);
+  const code = editors[`${editorId}-code`];
+  const encodedCodeString = encodeURI(btoa(code.getValue()));
+  previewNode.src = `/preview.html?code=${encodedCodeString}`;
 }
 
 function getResults(id, editors) {
   canSubmit = false;
 
   const code = editors[`${id}-code`];
+  const codeValue = code.getValue();
+  const encodedCodeString = encodeURI(btoa(code.getValue()));
+
+  if (!codeValue) {
+    resultNode.innerHTML = "<span class='subdued'>No code provided</span>";
+    canSubmit = true;
+    return;
+  }
+
+  refreshPreview(id, editors);
+
   const nameMatch = code.getValue().match(/function (\w+)/);
 
   if (!nameMatch) {
@@ -90,20 +112,30 @@ function getResults(id, editors) {
   const name = code.getValue().match(/function (\w+)/)[1];
   const resultNode = document.getElementById(`${id}-result`);
   const tests = editors[`${id}-tests`];
+  const testsValue = tests.getValue();
+
+  if (!testsValue) {
+    resultNode.innerHTML = "<span class='subdued'>No tests provided</span>";
+    canSubmit = true;
+    return;
+  }
+
   const data = {
     name,
-    code: code.getValue(),
-    tests: tests.getValue()
+    code: codeValue,
+    tests: testsValue,
   };
-  console.log(data);
+
   window.history.replaceState(
     data,
     document.title,
-    `?code=${encodeURI(btoa(code.getValue()))}&tests=${encodeURI(
+    `?code=${encodedCodeString}&tests=${encodeURI(
       btoa(tests.getValue())
     )}`
   );
+
   resultNode.textContent = "Running tests...";
+
   window
     .fetch("/api", {
       method: "POST",

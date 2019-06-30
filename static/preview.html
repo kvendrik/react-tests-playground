@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Preview</title>
+    <link href="/document.css" rel="stylesheet" />
+    <style>
+      html {
+        margin: 0.8em;
+        color: white;
+        font-family: 'Monaco';
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"><span class="subdued">Preview will appear here...</span></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="/utilities.js"></script>
+    <script>
+      const componentCode = getQueryParameter('code');
+      const [,componentName] = componentCode.match(/function (\w+)/);
+      const renderString = `${componentCode}\nReactDOM.render(<${componentName} />, document.getElementById('root'));`;
+      const {code} = window.Babel.transform(renderString, {presets: ['es2015', 'react']});
+      console.log(code);
+      eval(code);
+    </script>
+  </body>
+</html>
