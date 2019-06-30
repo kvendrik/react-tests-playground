@@ -2,11 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Playground</title>
-    <link href="/document.css" rel="stylesheet" />
-    <link href="/editor.css" rel="stylesheet" />
+    <link href="/editor/editor.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://codemirror.net/lib/codemirror.css" />
     <link rel="stylesheet" href="https://codemirror.net/theme/monokai.css" />
     <script src="https://codemirror.net/lib/codemirror.js"></script>
@@ -15,28 +14,35 @@
     <script src="https://codemirror.net/mode/jsx/jsx.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="editors-wrapper" id="main">
-        <textarea data-code-editor="main-code">
+
+    <main class="wrapper">
+      <div class="wrapper__editors">
+        <textarea data-code-editor="code">
 function Button({children}: any) {
-  return &lt;a>{children || 'Hello!'}&lt;/a>;
+  return &lt;a>{children}&lt;/a>;
 }</textarea
         >
-        <textarea data-code-editor="main-tests">
+        <textarea data-code-editor="tests">
 it('renders children', () => {
   const wrapper = mount(&lt;Button>Click me!&lt;/Button>);
   expect(wrapper.text()).toBe('Click me!');
 });</textarea
         >
+        <textarea data-code-editor="index">&lt;Button>Hello!&lt;/Button></textarea>
       </div>
-      <iframe src="/preview.html" id="main-preview" frameborder="0"></iframe>
-      <pre class="result" id="main-result"><span class="subdued">Press cmd + ctrl to run tests.<br>Press cmd + alt to refresh the preview.</span></pre>
-    </div>
-    <div class="bottom-menu">
-      <button class="button" data-layout-change="main" data-layout-action="vertical"><img class="layout-icon" src="/vertical-editor-layout.svg" /></button>
-      <button class="button button--is-active" data-layout-change="main" data-layout-action="preview"><img class="layout-icon" src="/preview.svg" /></button>
-    </div>
-    <script src="/utilities.js"></script>
-    <script src="/editor.js"></script>
+      <iframe class="preview" frameborder="0"></iframe>
+      <div class="message"></div>
+    </main>
+
+    <nav class="layout-menu">
+      <button class="button" data-layout-action="vertical">
+        <img class="layout-menu__icon" src="/editor/svg/vertical-editor-layout.svg" />
+      </button>
+      <button class="button" data-layout-action="preview">
+        <img class="layout-menu__icon" src="/editor/svg/preview.svg" />
+      </button>
+    </nav>
+
+    <script type="module" src="/editor/editor.mjs"></script>
   </body>
 </html>

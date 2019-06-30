@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Preview</title>
+    <link href="/foundation/document.css" rel="stylesheet" />
+    <style>
+      html {
+        margin: 0.8em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script type="module">
+      import {decodeCode, getQueryParameter} from '../foundation/utilities.mjs';
+
+      const componentCode = decodeCode(getQueryParameter('code'));
+      const componentIndex = decodeCode(getQueryParameter('index'));
+
+      if (componentCode && componentIndex) {
+        const renderString = `${componentCode}\nReactDOM.render(${componentIndex}, document.getElementById('root'));`;
+        const {code} = window.Babel.transform(renderString, {presets: ['es2015', 'react']});
+        eval(code);
+      }
+    </script>
+  </body>
+</html>

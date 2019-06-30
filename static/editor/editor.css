@@ -1,3 +1,5 @@
+@import '/foundation/document.css';
+
 :root {
   --subdued-active-opacity: 0.3;
   --spacing-base: 0.5rem;
@@ -16,39 +18,40 @@ body {
   align-items: center;
 }
 
-.container {
+.wrapper {
   width: 95%;
   margin: 0 auto;
   text-align: center;
 }
 
-iframe {
-  width: 100%;
-  background: var(--color-dark-light);
-  border-radius: var(--border-radius);
-  margin-top: var(--spacing-base);
-}
-
-.editors-wrapper {
+.wrapper__editors {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.editors-wrapper--vertical {
+.wrapper__editors--vertical {
   flex-direction: column;
 }
 
-.editors-wrapper--vertical .CodeMirror {
-  margin: var(--spacing-base) 0;
+.preview {
+  width: 100%;
+  background: var(--color-dark-light);
+  border-radius: var(--border-radius);
 }
 
-.bottom-menu {
+.layout-menu {
   position: absolute;
   bottom: var(--spacing-loose);
   right: var(--spacing-loose);
   display: flex;
   align-items: center;
+}
+
+.layout-menu__icon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
 }
 
 .button {
@@ -69,34 +72,26 @@ iframe {
   outline: none;
 }
 
-.layout-icon {
-  width: 2em;
-}
-
-.preview-hidden {
+.hidden {
   display: none;
 }
 
-.result {
+.message {
   font-size: 1.5em;
   height: 1em;
   margin: 0;
   margin-top: var(--spacing-loose);
 }
 
-.result span {
-  position: relative;
-  top: 5px;
-}
-
 .CodeMirror {
+  width: 100%;
+  margin-bottom: var(--spacing-base);
   flex-basis: calc(50% - (var(--spacing-base) / 2));
   flex-shrink: 0;
   height: auto !important;
   box-sizing: border-box;
   text-align: left;
   font-size: 1em;
-  float: left;
   border-radius: var(--border-radius);
 }
 

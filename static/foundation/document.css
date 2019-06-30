@@ -1,5 +1,6 @@
 :root {
   --subdued-opacity: 0.15;
+  --family: 'Monaco';
 }
 
 html,
@@ -9,6 +10,11 @@ body {
 
 html {
   font-size: 1.4vw;
+}
+
+body {
+  font-family: var(--family);
+  color: white;
 }
 
 .subdued {
