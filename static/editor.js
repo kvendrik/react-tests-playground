@@ -100,8 +100,6 @@ function getResults(id, editors) {
     return;
   }
 
-  refreshPreview(id, editors);
-
   const nameMatch = code.getValue().match(/function (\w+)/);
 
   if (!nameMatch) {
