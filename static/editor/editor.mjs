@@ -46,7 +46,11 @@ function togglePreviewMode(doShow) {
   const turnPreviewModeOn = typeof doShow !== 'undefined' ? doShow : indexEditorNode.classList.contains('hidden');
   const layoutButton = document.querySelector('[data-layout-action="preview"]');
 
-  setQueryParameters({preview: turnPreviewModeOn ? 1 : 0});
+  window.history.replaceState(
+    {},
+    document.title,
+    constructQueryString({preview: turnPreviewModeOn ? 1 : 0}),
+  );
 
   if (turnPreviewModeOn) {
     previewNode.classList.remove('hidden');
@@ -124,7 +128,7 @@ function refreshPreview() {
   previewNode.src = `/preview?code=${encodedCodeString}&index=${encodedIndexString}`;
 }
 
-function setQueryParameters(parameters = {}) {
+function constructQueryString(parameters = {}) {
   let searchParams = window.location.search;
 
   for (const parameter of Object.keys(parameters)) {
@@ -135,11 +139,7 @@ function setQueryParameters(parameters = {}) {
     searchParams += `${searchParams ? '&' : ''}${parameter}=${parameters[parameter]}`;
   }
 
-  window.history.replaceState(
-    {},
-    document.title,
-    `?${searchParams.replace(/^\?/, '')}`
-  );
+  return `?${searchParams.replace(/^\?/, '')}`;
 }
 
 function setCodeQueryParameters() {
@@ -149,7 +149,11 @@ function setCodeQueryParameters() {
   window.history.replaceState(
     {},
     document.title,
-    `?code=${encodedCode}&tests=${encodedTests}&index=${encodedIndex}`
+    constructQueryString({
+      code: encodedCode,
+      tests: encodedTests,
+      index: encodedIndex,
+    }),
   );
 }
 
