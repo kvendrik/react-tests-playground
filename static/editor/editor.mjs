@@ -16,17 +16,17 @@ document.addEventListener("keyup", ({ keyCode, metaKey }) => {
       setMessage(`${messageNode.innerHTML}<br><span class="subdued">Can't submit while running tests.</span>`);
       return;
     }
-    togglePreviewMode(false);
     getResults();
-    setCodeQueryParameters({preview: 0});
+    setCodeQueryParameters();
+    togglePreviewMode(false);
     return;
   }
 
   if (keyCode === 18 && metaKey) {
     // if cmd + alt
     refreshPreview();
+    setCodeQueryParameters();
     togglePreviewMode(true);
-    setCodeQueryParameters({preview: 1});
   }
 });
 
@@ -45,6 +45,8 @@ function togglePreviewMode(doShow) {
   const testsEditorNode = getEditor('tests');
   const turnPreviewModeOn = typeof doShow !== 'undefined' ? doShow : indexEditorNode.classList.contains('hidden');
   const layoutButton = document.querySelector('[data-layout-action="preview"]');
+
+  setQueryParameters({preview: turnPreviewModeOn ? 1 : 0});
 
   if (turnPreviewModeOn) {
     previewNode.classList.remove('hidden');
@@ -122,15 +124,32 @@ function refreshPreview() {
   previewNode.src = `/preview?code=${encodedCodeString}&index=${encodedIndexString}`;
 }
 
-function setCodeQueryParameters(additionalQueryParams = {}) {
-  const encodedTests = encodeCode(getEditor('tests', true).getValue());
-  const encodedCode = encodeCode(getEditor('code', true).getValue());
-  const encodedIndex = encodeCode(getEditor('index', true).getValue());
-  const additionalParamsString = Object.keys(additionalQueryParams).map((key) => `${key}=${additionalQueryParams[key]}`).join('&');
+function setQueryParameters(parameters = {}) {
+  let searchParams = window.location.search;
+
+  for (const parameter of Object.keys(parameters)) {
+    if (searchParams.includes(parameter)) {
+      searchParams = searchParams.replace(new RegExp(`${parameter}\=[^\&]+`), `${parameter}=${parameters[parameter]}`);
+      continue;
+    }
+    searchParams += `${searchParams ? '&' : ''}${parameter}=${parameters[parameter]}`;
+  }
+
   window.history.replaceState(
     {},
     document.title,
-    `?code=${encodedCode}&tests=${encodedTests}&index=${encodedIndex}&${additionalParamsString}`
+    `?${searchParams.replace(/^\?/, '')}`
+  );
+}
+
+function setCodeQueryParameters() {
+  const encodedTests = encodeCode(getEditor('tests', true).getValue());
+  const encodedCode = encodeCode(getEditor('code', true).getValue());
+  const encodedIndex = encodeCode(getEditor('index', true).getValue());
+  window.history.replaceState(
+    {},
+    document.title,
+    `?code=${encodedCode}&tests=${encodedTests}&index=${encodedIndex}`
   );
 }
 
