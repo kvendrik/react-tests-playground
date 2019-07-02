@@ -16,13 +16,17 @@ document.addEventListener("keyup", ({ keyCode, metaKey }) => {
       setMessage(`${messageNode.innerHTML}<br><span class="subdued">Can't submit while running tests.</span>`);
       return;
     }
+    togglePreviewMode(false);
     getResults();
+    setCodeQueryParameters({preview: 0});
     return;
   }
 
   if (keyCode === 18 && metaKey) {
     // if cmd + alt
     refreshPreview();
+    togglePreviewMode(true);
+    setCodeQueryParameters({preview: 1});
   }
 });
 
@@ -69,7 +73,7 @@ function setupLayoutButtons() {
     buttonNode.classList.toggle('button--is-active');
 
     if (action === 'vertical') {
-      const wrapperNode = document.getElementById('wrapper__editors');
+      const wrapperNode = document.querySelector('.wrapper__editors');
       wrapperNode.classList.toggle('wrapper__editors--vertical');
       return;
     }
@@ -93,7 +97,10 @@ function setupEditors() {
     });
     checkEditorValueGiven("code", editor, element);
     checkEditorValueGiven("tests", editor, element);
+    checkEditorValueGiven("index", editor, element);
   }
+
+  document.body.classList.add('visually-hidden--visible');
 }
 
 function checkEditorValueGiven(editorName, editor, editorElement) {
@@ -113,7 +120,18 @@ function refreshPreview() {
   const encodedCodeString = encodeCode(code.getValue());
   const encodedIndexString = encodeCode(index.getValue());
   previewNode.src = `/preview?code=${encodedCodeString}&index=${encodedIndexString}`;
-  togglePreviewMode(true);
+}
+
+function setCodeQueryParameters(additionalQueryParams = {}) {
+  const encodedTests = encodeCode(getEditor('tests', true).getValue());
+  const encodedCode = encodeCode(getEditor('code', true).getValue());
+  const encodedIndex = encodeCode(getEditor('index', true).getValue());
+  const additionalParamsString = Object.keys(additionalQueryParams).map((key) => `${key}=${additionalQueryParams[key]}`).join('&');
+  window.history.replaceState(
+    {},
+    document.title,
+    `?code=${encodedCode}&tests=${encodedTests}&index=${encodedIndex}&${additionalParamsString}`
+  );
 }
 
 function getResults() {
@@ -121,7 +139,6 @@ function getResults() {
 
   const code = getEditor('code', true);
   const codeValue = code.getValue();
-  const encodedCodeString = encodeCode(codeValue);
 
   if (!codeValue) {
     setMessage("<span class='subdued'>No code provided</span>");
@@ -152,14 +169,7 @@ function getResults() {
     tests: testsValue,
   };
 
-  window.history.replaceState(
-    data,
-    document.title,
-    `?code=${encodedCodeString}&tests=${encodeCode(testsValue)}`
-  );
-
   setMessage( "Running tests...");
-  togglePreviewMode(false);
 
   window
     .fetch("/api", {

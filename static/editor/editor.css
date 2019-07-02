@@ -10,12 +10,26 @@
   --border-radius: 0.2rem;
 }
 
-body {
+html {
   background: var(--color-dark);
+}
+
+body {
   color: var(--color-light);
   height: 100vh;
   display: flex;
   align-items: center;
+}
+
+.visually-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: all .1s ease;
+}
+
+.visually-hidden--visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 .wrapper {
